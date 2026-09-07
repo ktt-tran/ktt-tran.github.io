@@ -1,0 +1,145 @@
+/* ============================================================
+   TOKENS — edit these to change colors/radius across the site
+   ============================================================ */
+:root{
+  --bg:#ffffff;
+  --ink:#000000;        /* primary text / primary buttons */
+  --mut:#68686f;        /* secondary text */
+  --line:#e4e4e7;       /* hairline borders */
+  --soft:#fafafa;       /* subtle surface fill */
+  --acc:#0068e1;        /* accent blue: links, focus, highlights */
+  --r:10px;             /* base corner radius: cards, photo */
+  --r-pill:999px;       /* buttons only */
+  --r-chip:6px;         /* tech-stack chips only */
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:16px;line-height:1.65;color:var(--ink);background:var(--bg);overflow-x:hidden}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+a{color:inherit}
+p{color:#2b2b31;margin-bottom:14px;max-width:900px}
+h2{font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+
+/* ============================================================
+   NAV — same on every page; edit once here
+   ============================================================ */
+.top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 5vw;height:64px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+nav{display:flex;gap:28px;flex-wrap:wrap}
+nav a{color:var(--mut);text-decoration:none;font-size:.92rem;font-weight:500;transition:color .15s}
+nav a:hover{color:var(--ink)}
+nav a.on{color:var(--ink);font-weight:600}
+
+/* ============================================================
+   PARALLAX BACKDROP — the one animated flourish on the page.
+   Two soft blurred circles drift at different speeds on scroll.
+   ============================================================ */
+.blob{position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);opacity:.3;pointer-events:none}
+.b1{width:380px;height:380px;background:#bfe2ff;top:40px;left:-140px;--d:-260px}
+.b2{width:320px;height:320px;background:#bdf5ff;top:480px;right:-120px;--d:-560px}
+@keyframes drift{to{transform:translateY(var(--d))}}
+@supports (animation-timeline:scroll()){.blob{animation:drift linear both;animation-timeline:scroll(root)}}
+
+/* ============================================================
+   PAGE LAYOUT
+   ============================================================ */
+.panel{max-width:1080px;margin:auto;padding:64px 5vw 40px;animation:in .5s ease}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.sub{color:var(--mut);margin-bottom:36px;max-width:560px}
+
+/* ============================================================
+   ABOUT — hero, quote band, quick facts
+   ============================================================ */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;padding:24px 0 8px}
+.photo{position:relative;width:190px;aspect-ratio:1;border-radius:20px;border:1px solid var(--line);overflow:hidden;display:grid;place-items:center;text-align:center;color:var(--mut);font-size:.85rem;background:var(--soft)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border:1px solid var(--line);border-radius:var(--r-pill);font-size:.85rem;color:var(--mut);background:#fff;margin-bottom:20px}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:#17c964;flex:none}
+h1{font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.12;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.lead{font-size:1.1rem;color:var(--mut);margin:18px 0 28px;max-width:540px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 24px;border-radius:var(--r-pill);border:1px solid var(--line);font-weight:600;font-size:.92rem;color:var(--ink);background:#fff;text-decoration:none;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.dark:hover{background:#1a1a1a}
+
+.band{margin:72px 0;padding:60px 32px;text-align:center;border:1px solid var(--line);border-radius:16px;position:relative;overflow:hidden;
+  background:
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/28px 28px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/28px 28px,
+    #fff;}
+.band::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,#fff 85%)}
+.band p{position:relative;font-size:clamp(1.15rem,2.6vw,1.5rem);font-style:italic;color:var(--ink);max-width:620px;margin:0 auto}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:30px}
+.fact{padding:20px;background:#fff;font-size:.95rem}
+.fact b{display:block;font-size:.78rem;color:var(--acc);margin-bottom:4px}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.card{padding:24px;border:1px solid var(--line);border-radius:var(--r);background:#fff;transition:border-color .15s,transform .15s,box-shadow .15s}
+.card:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.06)}
+.card h3{margin-bottom:8px;font-size:1.05rem}
+.card a{color:var(--acc);font-weight:600;font-size:.92rem;text-decoration:none}
+.card a:hover{text-decoration:underline}
+.card.add{border-style:dashed;background:var(--soft);color:var(--mut)}
+.card.add h3{color:var(--mut)}
+
+/* ============================================================
+   EXPERIENCE — a stacked timeline, not a card grid (it's a
+   sequence, so it gets sequence-shaped treatment)
+   ============================================================ */
+.timeline{margin-top:8px}
+.exp{display:grid;grid-template-columns:px 1fr;gap:14px;padding:1px 0;border-top:1px solid var(--line)}
+.exp:first-child{border-top:none}
+.exp-date{font-family:var(--mono);font-size:.82rem;color:var(--mut);padding-top:2px}
+.exp-body h3{font-size:1.05rem;margin-bottom:2px}
+.exp-body h3 span{display:block;font-weight:400;color:var(--mut);font-size:.9rem;margin-top:2px}
+.exp-body ul:not(.chips){margin:10px 0 16px 20px;color:#2b2b31;font-size:.95rem}
+.exp-body ul:not(.chips) li{margin-bottom:6px}
+.exp.add{opacity:.6}
+.exp.add h3{font-weight:600;color:var(--mut)}
+
+/* ============================================================
+   TECH STACK
+   ============================================================ */
+#stack h3{margin:40px 0 14px;font-size:1.05rem;font-weight:700;padding-left:12px;border-left:3px solid var(--acc)}
+#stack h3:first-of-type{margin-top:0}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:14px 0}
+.chips li{padding:6px 12px;border:1px solid var(--line);border-radius:var(--r-chip);background:var(--soft);font-family:var(--mono);font-size:.82rem;color:var(--mut);transition:background .15s,color .15s,border-color .15s}
+.chips li:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ============================================================
+   FOOTER — same on every page; edit links once here per page
+   ============================================================ */
+footer{margin-top:50px;padding:52px 5vw 40px;text-align:center;background:#fff;border-top:1px solid var(--line)}
+footer p{font-weight:600;color:var(--ink);font-size:.95rem}
+.socials{display:flex;justify-content:center;gap:14px;margin:18px 0 22px}
+.socials a{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--mut);transition:border-color .15s,color .15s}
+.socials a:hover{border-color:var(--ink);color:var(--ink)}
+.socials a::before{content:"";width:19px;height:19px;background:currentColor;-webkit-mask:var(--i) center/contain no-repeat;mask:var(--i) center/contain no-repeat}
+.socials .in{--i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 9h3v10H5zM6.5 4.6a1.7 1.7 0 110 3.4 1.7 1.7 0 010-3.4zM10 9h2.9v1.4c.5-.9 1.6-1.6 3.1-1.6 3 0 3.5 2 3.5 4.5V19h-3v-5c0-1.2 0-2.6-1.7-2.6S13 12.7 13 14v5h-3z'/%3E%3C/svg%3E")}
+.socials .gh{--i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E")}
+.socials .em{--i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-width='1.8' d='M4 6.5h16v11H4zM4 7l8 6 8-6'/%3E%3C/svg%3E")}
+footer small{color:#9a9aa1;font-size:.82rem}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:720px){
+  .top{padding:0 4vw}
+  nav{gap:18px}
+  nav a{font-size:.86rem}
+  .panel{padding:40px 5vw 32px}
+  .hero{grid-template-columns:1fr;gap:26px;text-align:center;justify-items:center}
+  .photo{width:150px}
+  .lead{margin-inline:auto}
+  .btns{justify-content:center}
+  .band{padding:44px 20px}
+  .exp{grid-template-columns:1fr;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){.blob{animation:none}*{transition:none!important}}
